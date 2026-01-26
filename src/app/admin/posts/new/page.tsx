@@ -11,10 +11,13 @@ import ImageUpload from '@/components/admin/ImageUpload';
 // Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
+type EditorMode = 'visual' | 'code';
+
 export default function NewPost() {
     const router = useRouter();
     const [categories, setCategories] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
+    const [editorMode, setEditorMode] = useState<EditorMode>('code');
 
     const [formData, setFormData] = useState({
         title: '',
@@ -172,16 +175,44 @@ export default function NewPost() {
                         </div>
 
                         <div className="pb-12">
-                            <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">Body Content</label>
-                            <div className="h-[400px]">
-                                <ReactQuill
-                                    theme="snow"
-                                    value={formData.content}
-                                    onChange={(val) => setFormData(prev => ({ ...prev, content: val }))}
-                                    className="h-[350px]"
-                                    modules={modules}
-                                />
+                            <div className="flex items-center justify-between mb-2">
+                                <label className="block text-xs font-bold text-muted uppercase tracking-wider">Body Content</label>
+                                <div className="flex bg-gray-100 p-1 rounded-lg">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditorMode('visual')}
+                                        className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${editorMode === 'visual' ? 'bg-white text-secondary shadow-sm' : 'text-muted hover:text-secondary'}`}
+                                    >
+                                        Visual
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditorMode('code')}
+                                        className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${editorMode === 'code' ? 'bg-white text-secondary shadow-sm' : 'text-muted hover:text-secondary'}`}
+                                    >
+                                        Code
+                                    </button>
+                                </div>
                             </div>
+
+                            {editorMode === 'visual' ? (
+                                <div className="h-[400px]">
+                                    <ReactQuill
+                                        theme="snow"
+                                        value={formData.content}
+                                        onChange={(val) => setFormData(prev => ({ ...prev, content: val }))}
+                                        className="h-[350px]"
+                                        modules={modules}
+                                    />
+                                </div>
+                            ) : (
+                                <textarea
+                                    value={formData.content}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                                    placeholder="Write your raw HTML or plain text here..."
+                                    className="w-full h-[400px] p-6 bg-gray-900 text-gray-100 font-mono text-sm rounded-xl border border-border focus:ring-2 focus:ring-primary/20 outline-none resize-none leading-relaxed shadow-inner"
+                                />
+                            )}
                         </div>
                     </div>
 
