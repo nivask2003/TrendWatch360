@@ -2,13 +2,25 @@
 
 import Link from 'next/link';
 import NewsCard from './NewsCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 
 const Sidebar = ({ trendingPosts = [] }: { trendingPosts?: any[] }) => {
     const [query, setQuery] = useState('');
+    const [categories, setCategories] = useState<any[]>([]);
     const router = useRouter();
+
+    useEffect(() => {
+        fetch('/api/categories')
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data)) {
+                    setCategories(data);
+                }
+            })
+            .catch(err => console.error('Failed to fetch categories:', err));
+    }, []);
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -45,8 +57,8 @@ const Sidebar = ({ trendingPosts = [] }: { trendingPosts?: any[] }) => {
                 </div>
                 <div className="flex flex-col gap-6">
                     {trendingPosts.length > 0 ? (
-                        trendingPosts.map((post) => (
-                            <NewsCard key={post.slug} post={post} variant="horizontal" />
+                        trendingPosts.slice(0, 5).map((post) => (
+                            <NewsCard key={post._id || post.slug} post={post} variant="horizontal" />
                         ))
                     ) : (
                         <p className="text-sm text-muted">No trending news at the moment.</p>
@@ -66,15 +78,16 @@ const Sidebar = ({ trendingPosts = [] }: { trendingPosts?: any[] }) => {
                     <h3 className="text-xl font-black">CATEGORIES</h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                    {['Technology', 'Business', 'Lifestyle', 'Politics', 'Sports', 'Entertainment'].map((cat) => (
+                    {categories.map((cat) => (
                         <Link
-                            key={cat}
-                            href={`/category/${cat.toLowerCase()}`}
-                            className="px-4 py-2 bg-white border border-border rounded-full text-xs font-bold hover:bg-primary hover:text-white hover:border-primary transition-all"
+                            key={cat._id}
+                            href={`/category/${cat.slug}`}
+                            className="px-4 py-2 bg-white border border-border rounded-full text-xs font-bold hover:bg-primary hover:text-white hover:border-primary transition-all text-center"
                         >
-                            {cat}
+                            {cat.name}
                         </Link>
                     ))}
+                    {categories.length === 0 && <p className="text-sm text-muted">No categories available.</p>}
                 </div>
             </div>
         </aside>

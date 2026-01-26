@@ -8,10 +8,22 @@ export async function GET(req: NextRequest) {
     const category = searchParams.get('category');
     const trending = searchParams.get('trending');
     const limit = parseInt(searchParams.get('limit') || '10');
+    const all = searchParams.get('all') === 'true';
+    const q = searchParams.get('q');
 
-    const filter: any = { status: 'published' };
+    const filter: any = {};
+    if (!all) {
+        filter.status = 'published';
+    }
+
     if (category) filter.category = category;
     if (trending === 'true') filter.isTrending = true;
+    if (q) {
+        filter.$or = [
+            { title: { $regex: q, $options: 'i' } },
+            { summary: { $regex: q, $options: 'i' } }
+        ];
+    }
 
     try {
         const posts = await Post.find(filter)

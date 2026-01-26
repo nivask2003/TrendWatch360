@@ -21,7 +21,7 @@ const NewsCard = ({ post, variant = 'vertical' }: NewsCardProps) => {
             <div className="flex gap-4 items-start group">
                 <div className="relative w-32 h-24 flex-shrink-0 overflow-hidden rounded-lg">
                     <Image
-                        src={post.featuredImage || '/placeholder-news.jpg'}
+                        src={post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=800'}
                         alt={post.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -62,7 +62,7 @@ const NewsCard = ({ post, variant = 'vertical' }: NewsCardProps) => {
         <div className="flex flex-col gap-4 group">
             <div className="relative aspect-[16/9] overflow-hidden rounded-xl bg-gray-100 border border-border">
                 <Image
-                    src={post.featuredImage || '/placeholder-news.jpg'}
+                    src={post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=800'}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"

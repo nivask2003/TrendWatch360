@@ -1,15 +1,33 @@
 "use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Menu, X, Search } from 'lucide-react';
 
+interface Category {
+  _id: string;
+  name: string;
+  slug: string;
+}
+
 const Header = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setCategories(data);
+        }
+      })
+      .catch(err => console.error('Failed to fetch categories:', err));
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,13 +45,18 @@ const Header = () => {
           <Link href="/" className="text-2xl font-black tracking-tighter text-primary">
             UPLIKE <span className="text-secondary tracking-normal">NEWS</span>
           </Link>
-          
+
           <nav className="hidden md:flex items-center gap-6">
             <Link href="/" className="text-sm font-semibold hover:text-primary transition-colors">Home</Link>
-            <Link href="/category/technology" className="text-sm font-semibold hover:text-primary transition-colors">Technology</Link>
-            <Link href="/category/business" className="text-sm font-semibold hover:text-primary transition-colors">Business</Link>
-            <Link href="/category/lifestyle" className="text-sm font-semibold hover:text-primary transition-colors">Lifestyle</Link>
-            <Link href="/category/politics" className="text-sm font-semibold hover:text-primary transition-colors">Politics</Link>
+            {categories.slice(0, 5).map(cat => (
+              <Link
+                key={cat._id}
+                href={`/category/${cat.slug}`}
+                className="text-sm font-semibold hover:text-primary transition-colors"
+              >
+                {cat.name}
+              </Link>
+            ))}
           </nav>
         </div>
 
@@ -52,7 +75,7 @@ const Header = () => {
                 />
               </form>
             ) : (
-              <button 
+              <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
                 aria-label="Open Search"
@@ -61,8 +84,8 @@ const Header = () => {
               </button>
             )}
           </div>
-          
-          <button 
+
+          <button
             className="md:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -73,13 +96,19 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-border p-4 absolute w-full left-0 top-16 shadow-xl animate-in fade-in slide-in-from-top-2">
+        <div className="md:hidden bg-white border-t border-border p-4 absolute w-full left-0 top-16 shadow-xl animate-in fade-in slide-in-from-top-2 z-50">
           <nav className="flex flex-col gap-4">
             <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold">Home</Link>
-            <Link href="/category/technology" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold">Technology</Link>
-            <Link href="/category/business" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold">Business</Link>
-            <Link href="/category/lifestyle" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold">Lifestyle</Link>
-            <Link href="/category/politics" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold">Politics</Link>
+            {categories.map(cat => (
+              <Link
+                key={cat._id}
+                href={`/category/${cat.slug}`}
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-bold"
+              >
+                {cat.name}
+              </Link>
+            ))}
           </nav>
         </div>
       )}

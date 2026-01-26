@@ -5,15 +5,19 @@ import dynamic from 'next/dynamic';
 import 'react-quill-new/dist/quill.snow.css';
 import { Save, X, Image as ImageIcon, Send, Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 // Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
-export default function NewPost() {
+export default function EditPost() {
     const router = useRouter();
+    const params = useParams();
+    const id = params.id as string;
+
     const [categories, setCategories] = useState<any[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
 
     const [formData, setFormData] = useState({
         title: '',
@@ -34,7 +38,8 @@ export default function NewPost() {
 
     useEffect(() => {
         fetchCategories();
-    }, []);
+        fetchPost();
+    }, [id]);
 
     const fetchCategories = async () => {
         try {
@@ -43,6 +48,25 @@ export default function NewPost() {
             setCategories(data);
         } catch (error) {
             console.error('Failed to fetch categories:', error);
+        }
+    };
+
+    const fetchPost = async () => {
+        try {
+            const res = await fetch(`/api/posts/${id}`);
+            const data = await res.json();
+            if (res.ok) {
+                setFormData({
+                    ...data,
+                    category: data.category?._id || data.category,
+                    tags: data.tags?.join(', ') || '',
+                    seo: data.seo || { metaTitle: '', metaDescription: '', focusKeyword: '' }
+                });
+            }
+        } catch (error) {
+            console.error('Failed to fetch post:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -66,24 +90,25 @@ export default function NewPost() {
 
         setFormData(prev => ({
             ...prev,
-            [name]: value,
-            ...(name === 'title' ? { slug: value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') } : {})
+            [name]: value
         }));
     };
 
     const handleSubmit = async (statusOverride?: string) => {
-        setLoading(true);
+        setSaving(true);
         const finalStatus = statusOverride || formData.status;
 
         const payload = {
             ...formData,
             status: finalStatus,
-            tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '')
+            tags: typeof formData.tags === 'string'
+                ? formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag !== '')
+                : formData.tags
         };
 
         try {
-            const res = await fetch('/api/posts', {
-                method: 'POST',
+            const res = await fetch(`/api/posts/${id}`, {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
@@ -92,15 +117,23 @@ export default function NewPost() {
                 router.push('/admin/posts');
             } else {
                 const err = await res.json();
-                alert(err.error || 'Failed to save post');
+                alert(err.error || 'Failed to update post');
             }
         } catch (error) {
-            console.error('Error saving post:', error);
-            alert('An error occurred while saving');
+            console.error('Error updating post:', error);
+            alert('An error occurred while updating');
         } finally {
-            setLoading(false);
+            setSaving(false);
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center p-24">
+                <Loader2 className="animate-spin text-primary" size={48} />
+            </div>
+        );
+    }
 
     const modules = {
         toolbar: [
@@ -116,8 +149,8 @@ export default function NewPost() {
         <div className="space-y-8 max-w-5xl mx-auto">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-black text-secondary">Create New Article</h1>
-                    <p className="text-muted text-sm mt-1">Draft your next big story. Remember to optimize for SEO.</p>
+                    <h1 className="text-3xl font-black text-secondary">Edit Article</h1>
+                    <p className="text-muted text-sm mt-1">Refine your story and keep it up to date.</p>
                 </div>
                 <div className="flex items-center gap-2 sm:gap-4">
                     <Link href="/admin/posts" className="p-2.5 sm:p-3 text-muted hover:text-secondary hover:bg-gray-100 rounded-xl transition-all">
@@ -125,19 +158,19 @@ export default function NewPost() {
                     </Link>
                     <button
                         onClick={() => handleSubmit('draft')}
-                        disabled={loading}
+                        disabled={saving}
                         className="flex items-center justify-center gap-2 bg-white border border-border text-secondary px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold hover:bg-gray-50 transition-all shadow-sm disabled:opacity-50"
                     >
-                        {loading ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
+                        {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
                         <span className="hidden sm:inline">Save Draft</span>
                     </button>
                     <button
                         onClick={() => handleSubmit('published')}
-                        disabled={loading}
+                        disabled={saving}
                         className="flex items-center justify-center gap-2 bg-primary text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl font-bold hover:shadow-lg transition-all disabled:opacity-50"
                     >
-                        {loading ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
-                        <span className="hidden sm:inline">Publish</span>
+                        {saving ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />}
+                        <span className="hidden sm:inline">Update & Publish</span>
                     </button>
                 </div>
             </div>
