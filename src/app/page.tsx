@@ -3,17 +3,38 @@ import Sidebar from "@/components/public/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from 'date-fns';
+import dbConnect from "@/lib/db";
+import Post from "@/models/Post";
+import Category from "@/models/Category";
 
 async function getPosts() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts?limit=10`, { cache: 'no-store' });
-  if (!res.ok) return [];
-  return res.json();
+  await dbConnect();
+  try {
+    const posts = await Post.find({ status: 'published' })
+      .populate('category')
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .lean();
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    return [];
+  }
 }
 
 async function getTrendingPosts() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts?trending=true&limit=5`, { cache: 'no-store' });
-  if (!res.ok) return [];
-  return res.json();
+  await dbConnect();
+  try {
+    const posts = await Post.find({ status: 'published', isTrending: true })
+      .populate('category')
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .lean();
+    return JSON.parse(JSON.stringify(posts));
+  } catch (error) {
+    console.error("Error fetching trending posts:", error);
+    return [];
+  }
 }
 
 export default async function Home() {
@@ -68,7 +89,7 @@ export default async function Home() {
           {secondaryPosts.length > 0 ? secondaryPosts.map((post: any) => (
             <div key={post.slug} className="group relative overflow-hidden rounded-2xl bg-gray-900 flex-grow aspect-video lg:aspect-auto">
               <Image
-                src={post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=800'}
+                src={post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=1200'}
                 alt={post.title}
                 fill
                 className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
@@ -114,7 +135,7 @@ export default async function Home() {
               {latestNews.length > 0 ? latestNews.map((post: any) => (
                 <NewsCard key={post._id} post={post} />
               )) : (
-                <div className="col-span-2 py-10 text-center text-muted font-bold">
+                <div className="col-span-2 py-10 text-center text-muted font-bold text-wrap break-words">
                   No more news articles at the moment.
                 </div>
               )}

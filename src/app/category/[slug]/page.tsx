@@ -1,28 +1,53 @@
 import NewsCard from "@/components/public/NewsCard";
 import Sidebar from "@/components/public/Sidebar";
 import Link from "next/link";
+import dbConnect from "@/lib/db";
+import Category from "@/models/Category";
+import Post from "@/models/Post";
 
-async function getCategory(slug: string) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/categories/slug/${slug}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-    return res.json();
+async function getCategoryData(slug: string) {
+    await dbConnect();
+    try {
+        const category = await Category.findOne({ slug }).lean();
+        return JSON.parse(JSON.stringify(category));
+    } catch (error) {
+        console.error("Error fetching category:", error);
+        return null;
+    }
 }
 
-async function getPostsByCategory(categoryId: string) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts?category=${categoryId}&limit=20`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    return res.json();
+async function getPostsByCategoryData(categoryId: string) {
+    await dbConnect();
+    try {
+        const posts = await Post.find({ category: categoryId, status: 'published' })
+            .populate('category')
+            .sort({ createdAt: -1 })
+            .limit(20)
+            .lean();
+        return JSON.parse(JSON.stringify(posts));
+    } catch (error) {
+        console.error("Error fetching category posts:", error);
+        return [];
+    }
 }
 
-async function getRecentPosts() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts?limit=5`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    return res.json();
+async function getRecentPostsData() {
+    await dbConnect();
+    try {
+        const posts = await Post.find({ status: 'published' })
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .lean();
+        return JSON.parse(JSON.stringify(posts));
+    } catch (error) {
+        console.error("Error fetching recent posts:", error);
+        return [];
+    }
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const category = await getCategory(slug);
+    const category = await getCategoryData(slug);
 
     if (!category) {
         return (
@@ -34,8 +59,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         );
     }
 
-    const posts = await getPostsByCategory(category._id);
-    const recentPosts = await getRecentPosts();
+    const posts = await getPostsByCategoryData(category._id);
+    const recentPosts = await getRecentPostsData();
 
     return (
         <div className="max-w-news py-10">

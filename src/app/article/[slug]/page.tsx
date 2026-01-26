@@ -2,25 +2,37 @@ import Sidebar from "@/components/public/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Clock, Share2, Facebook, Twitter, Link2 } from "lucide-react";
+import { Clock } from "lucide-react";
 import ShareButtons from "@/components/public/ShareButtons";
+import dbConnect from "@/lib/db";
+import Post from "@/models/Post";
 
-async function getPost(slug: string) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts/slug/${slug}`, { cache: 'no-store' });
-    if (!res.ok) return null;
-    return res.json();
+async function getPostData(slug: string) {
+    await dbConnect();
+    try {
+        const post = await Post.findOne({ slug, status: 'published' }).populate('category').lean();
+        return JSON.parse(JSON.stringify(post));
+    } catch (error) {
+        console.error("Error fetching post:", error);
+        return null;
+    }
 }
 
-async function getRecentPosts() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/posts?limit=5`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    return res.json();
+async function getRecentPostsData() {
+    await dbConnect();
+    try {
+        const posts = await Post.find({ status: 'published' }).sort({ createdAt: -1 }).limit(5).lean();
+        return JSON.parse(JSON.stringify(posts));
+    } catch (error) {
+        console.error("Error fetching recent posts:", error);
+        return [];
+    }
 }
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = await getPost(slug);
-    const recentPosts = await getRecentPosts();
+    const post = await getPostData(slug);
+    const recentPosts = await getRecentPostsData();
 
     if (!post) {
         return (
