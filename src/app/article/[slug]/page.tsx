@@ -44,8 +44,26 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         );
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": post.title,
+        "image": [post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=1200'],
+        "datePublished": post.createdAt,
+        "dateModified": post.updatedAt || post.createdAt,
+        "author": [{
+            "@type": "Person",
+            "name": post.author || "Admin",
+            "url": "https://uplikenews.com"
+        }]
+    };
+
     return (
         <div className="max-w-news py-6 md:py-10">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Breadcrumbs - Hidden on very small screens for better space */}
             <nav className="hidden sm:flex items-center gap-2 text-[10px] md:text-xs font-bold text-muted mb-6 uppercase tracking-widest border-b border-border/50 pb-4">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
