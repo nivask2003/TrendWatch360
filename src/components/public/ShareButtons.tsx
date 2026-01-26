@@ -30,7 +30,7 @@ export default function ShareButtons({ title }: ShareButtonsProps) {
     };
 
     return (
-        <div className="flex items-center gap-4 ml-auto">
+        <div className="flex items-center gap-4">
             <button
                 onClick={() => handleShare('facebook')}
                 className="p-2 hover:bg-gray-100 rounded-full text-blue-600 transition-colors"

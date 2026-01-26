@@ -45,8 +45,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     }
 
     return (
-        <div className="max-w-news py-10">
-            <nav className="flex items-center gap-2 text-xs font-bold text-muted mb-6 uppercase tracking-widest">
+        <div className="max-w-news py-6 md:py-10">
+            {/* Breadcrumbs - Hidden on very small screens for better space */}
+            <nav className="hidden sm:flex items-center gap-2 text-[10px] md:text-xs font-bold text-muted mb-6 uppercase tracking-widest border-b border-border/50 pb-4">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
                 <span>/</span>
                 <Link href={`/category/${post.category?.slug}`} className="hover:text-primary transition-colors">{post.category?.name || 'Uncategorized'}</Link>
@@ -54,33 +55,38 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 <span className="text-secondary line-clamp-1">{post.title}</span>
             </nav>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 <article className="lg:col-span-8">
                     <header className="mb-8">
-                        <Link href={`/category/${post.category?.slug}`} className="inline-block px-4 py-1 bg-primary text-white text-xs font-bold rounded-full mb-6">
+                        <Link href={`/category/${post.category?.slug}`} className="inline-block px-4 py-1.5 bg-primary text-white text-[10px] font-black rounded-full mb-6 uppercase tracking-wider">
                             {post.category?.name || 'Uncategorized'}
                         </Link>
-                        <h1 className="text-4xl md:text-5xl font-black text-secondary leading-tight mb-6 text-wrap break-words">
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-secondary leading-[1.15] mb-6 text-wrap break-words tracking-tight">
                             {post.title}
                         </h1>
 
-                        <div className="flex flex-wrap items-center gap-6 py-6 border-y border-border">
-                            <div className="flex items-center gap-2">
-                                <div className="w-10 h-10 rounded-full bg-gray-200" />
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-6 py-6 border-y border-border">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-gray-100 border border-border flex items-center justify-center text-secondary font-black text-xs">
+                                    {post.author ? post.author[0] : 'U'}
+                                </div>
                                 <div>
-                                    <p className="text-sm font-bold text-secondary">{post.author || 'Admin'}</p>
-                                    <p className="text-[10px] text-muted">Lead Journalist</p>
+                                    <p className="text-sm font-black text-secondary">{post.author || 'Uplike News'}</p>
+                                    <p className="text-[10px] text-muted font-bold uppercase tracking-tighter">Lead Journalist</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-2 text-muted">
-                                <Clock size={16} />
-                                <span className="text-xs font-semibold">{format(new Date(post.createdAt), 'MMMM dd, yyyy')}</span>
+
+                            <div className="flex items-center gap-6 sm:ml-auto">
+                                <div className="flex items-center gap-2 text-muted">
+                                    <Clock size={16} />
+                                    <span className="text-xs font-bold tracking-tight">{format(new Date(post.createdAt), 'MMM dd, yyyy')}</span>
+                                </div>
+                                <ShareButtons title={post.title} />
                             </div>
-                            <ShareButtons title={post.title} />
                         </div>
                     </header>
 
-                    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl mb-10 shadow-2xl">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl md:rounded-3xl mb-10 shadow-xl md:shadow-2xl ring-1 ring-border/50">
                         <Image
                             src={post.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=1200'}
                             alt={post.title}
@@ -91,14 +97,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     </div>
 
                     <div
-                        className="prose prose-lg max-w-none prose-headings:font-black prose-headings:text-secondary prose-p:text-gray-700 prose-p:leading-relaxed prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-gray-50 prose-blockquote:p-6 prose-blockquote:rounded-r-xl"
+                        className="prose prose-base sm:prose-lg max-w-none prose-headings:font-black prose-headings:text-secondary prose-p:text-gray-700 prose-p:leading-relaxed prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-gray-50 prose-blockquote:p-6 prose-blockquote:rounded-r-xl prose-img:rounded-2xl"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
 
                     {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-12 py-8 border-t border-border">
                             {post.tags.map((tag: string) => (
-                                <span key={tag} className="px-4 py-1.5 bg-gray-100 text-secondary text-xs font-bold rounded-lg uppercase tracking-wider hover:bg-primary hover:text-white transition-all cursor-pointer">
+                                <span key={tag} className="px-3 md:px-4 py-1.5 bg-gray-100 text-secondary text-[10px] md:text-xs font-black rounded-lg uppercase tracking-widest hover:bg-primary hover:text-white transition-all cursor-pointer shadow-sm">
                                     #{tag}
                                 </span>
                             ))}
@@ -106,7 +112,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     )}
                 </article>
 
-                <aside className="lg:col-span-4">
+                <aside className="lg:col-span-4 mt-8 lg:mt-0">
                     <Sidebar trendingPosts={recentPosts} />
                 </aside>
             </div>

@@ -63,29 +63,30 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     const recentPosts = await getRecentPostsData();
 
     return (
-        <div className="max-w-news py-10">
-            <div className="mb-12">
-                <div className="flex items-center gap-4 mb-4">
-                    <div className="w-3 h-10 bg-primary rounded-full" />
-                    <h1 className="text-5xl font-black uppercase text-secondary">{category.name}</h1>
+        <div className="max-w-news py-6 md:py-10">
+            <div className="mb-8 md:mb-12">
+                <div className="flex items-center gap-3 md:gap-4 mb-4">
+                    <div className="w-2 md:w-3 h-8 md:h-12 bg-primary rounded-full" />
+                    <h1 className="text-3xl md:text-5xl font-black uppercase text-secondary tracking-tight">{category.name}</h1>
                 </div>
-                <p className="text-muted text-lg">{category.description || `Exploring the latest updates and insights in ${category.name}.`}</p>
+                <p className="text-muted text-base md:text-lg max-w-3xl">{category.description || `Exploring the latest updates and insights in ${category.name}.`}</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                 <div className="lg:col-span-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
                         {posts.length > 0 ? posts.map((post: any) => (
                             <NewsCard key={post._id} post={post} />
                         )) : (
-                            <div className="col-span-2 py-12 text-center text-muted font-bold bg-gray-50 rounded-2xl border border-dashed border-border text-wrap break-words">
-                                No articles found in this category yet.
+                            <div className="col-span-1 md:col-span-2 py-16 text-center text-muted font-bold bg-gray-50 rounded-2xl border border-dashed border-border px-6">
+                                <p className="text-lg">No articles found in this category yet.</p>
+                                <Link href="/" className="text-primary hover:underline mt-4 inline-block">Back to homepage</Link>
                             </div>
                         )}
                     </div>
                 </div>
 
-                <aside className="lg:col-span-4">
+                <aside className="lg:col-span-4 mt-8 lg:mt-0">
                     <Sidebar trendingPosts={recentPosts} />
                 </aside>
             </div>
