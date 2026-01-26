@@ -97,7 +97,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     </div>
 
                     <div
-                        className="prose prose-base sm:prose-lg max-w-none prose-headings:font-black prose-headings:text-secondary prose-p:text-gray-700 prose-p:leading-relaxed prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:bg-gray-50 prose-blockquote:p-6 prose-blockquote:rounded-r-xl prose-img:rounded-2xl"
+                        className="prose prose-base sm:prose-lg max-w-none"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
 

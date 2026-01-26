@@ -65,11 +65,61 @@
   width: 4px;
 }
 
-/* Prose fixes */
-.prose img {
-  @apply rounded-3xl shadow-xl;
+/* Premium Reading Experience (Prose) */
+.prose {
+  --tw-prose-body: #374151;
+  /* gray-700 */
+  --tw-prose-headings: #1a1a1a;
+  /* secondary */
+  --tw-prose-links: #ef4444;
+  /* primary */
+  --tw-prose-bold: #1a1a1a;
+  --tw-prose-quotes: #374151;
+  --tw-prose-quote-borders: #ef4444;
+}
+
+.prose h2 {
+  @apply text-2xl md:text-3xl font-black mt-12 mb-6 pb-2 border-b border-gray-100;
+}
+
+.prose h3 {
+  @apply text-xl md:text-2xl font-extrabold mt-8 mb-4;
+}
+
+.prose p {
+  @apply mb-6 leading-relaxed text-base md:text-lg;
+}
+
+.prose blockquote {
+  @apply not-italic font-medium text-lg leading-relaxed bg-gray-50/50 border-primary p-6 md:p-8 rounded-r-3xl my-10 shadow-sm relative overflow-hidden;
+}
+
+.prose blockquote::before {
+  content: '"';
+  @apply absolute -top-4 -left-2 text-8xl text-primary/5 font-serif pointer-events-none;
 }
 
 .prose blockquote p {
-  @apply mb-0;
+  @apply m-0 relative z-10;
+}
+
+.prose ul,
+.prose ol {
+  @apply my-8 space-y-3;
+}
+
+.prose li {
+  @apply pl-2;
+}
+
+.prose strong {
+  @apply font-black text-secondary;
+}
+
+.prose img {
+  @apply rounded-2xl md:rounded-3xl shadow-2xl my-12 border border-border/50;
+}
+
+.prose hr {
+  @apply my-12 border-gray-100;
 }
