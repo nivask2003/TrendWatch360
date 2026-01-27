@@ -1,3 +1,13 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Terms and Conditions',
+    description: 'Terms and Conditions for using TrendWatch360 services.',
+    alternates: {
+        canonical: 'https://trend-watch360.vercel.app/terms-and-conditions',
+    },
+};
+
 export default function TermsAndConditions() {
     return (
         <div className="max-w-4xl mx-auto py-20 px-4 prose prose-slate">

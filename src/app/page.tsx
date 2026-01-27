@@ -56,8 +56,25 @@ export default async function Home() {
   const secondaryPosts = posts.slice(1, 3);
   const latestNews = posts.slice(3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "TrendWatch360",
+    "url": "https://trend-watch360.vercel.app",
+    "description": "Stay updated with the latest news on technology, business, lifestyle, and more at TrendWatch360.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://trend-watch360.vercel.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
+
   return (
     <div className="max-w-news py-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero Section */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
         <div className="lg:col-span-8 group relative overflow-hidden rounded-3xl bg-gray-900 aspect-[16/9]">

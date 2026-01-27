@@ -1,3 +1,13 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'About Us',
+    description: 'Learn more about TrendWatch360, our mission, and our commitment to high-quality journalism.',
+    alternates: {
+        canonical: 'https://trend-watch360.vercel.app/about-us',
+    },
+};
+
 export default function AboutUs() {
     return (
         <div className="max-w-4xl mx-auto py-20 px-4">

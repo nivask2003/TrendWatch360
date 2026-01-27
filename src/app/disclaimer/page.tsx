@@ -1,3 +1,13 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Disclaimer',
+    description: 'Disclaimer for TrendWatch360 content and services.',
+    alternates: {
+        canonical: 'https://trend-watch360.vercel.app/disclaimer',
+    },
+};
+
 export default function Disclaimer() {
     return (
         <div className="max-w-4xl mx-auto py-20 px-4 prose prose-slate">

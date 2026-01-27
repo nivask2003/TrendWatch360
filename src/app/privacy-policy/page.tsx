@@ -1,3 +1,13 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Privacy Policy',
+    description: 'Privacy Policy for TrendWatch360. Learn how we collect, use, and protect your information.',
+    alternates: {
+        canonical: 'https://trend-watch360.vercel.app/privacy-policy',
+    },
+};
+
 export default function PrivacyPolicy() {
     return (
         <div className="max-w-4xl mx-auto py-20 px-4 prose prose-slate">

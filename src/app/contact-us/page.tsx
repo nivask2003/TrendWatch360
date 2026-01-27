@@ -1,4 +1,13 @@
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Contact Us',
+    description: 'Get in touch with TrendWatch360. Send us your news tips, feedback, or business inquiries.',
+    alternates: {
+        canonical: 'https://trend-watch360.vercel.app/contact-us',
+    },
+};
 
 export default function ContactUs() {
     return (

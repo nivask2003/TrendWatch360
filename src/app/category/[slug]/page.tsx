@@ -45,7 +45,53 @@ async function getRecentPostsData() {
     }
 }
 
+import type { Metadata } from 'next';
+
 export const revalidate = 60;
+
+export async function generateMetadata(
+    { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+    const { slug } = await params;
+    const category = await getCategoryData(slug);
+
+    if (!category) {
+        return {
+            title: 'Category Not Found',
+        };
+    }
+
+    const title = `${category.name} News & Updates`;
+    const description = category.description || `Read the latest articles and stories about ${category.name} on TrendWatch360.`;
+
+    return {
+        title: title,
+        description: description,
+        openGraph: {
+            title: title,
+            description: description,
+            url: `https://trend-watch360.vercel.app/category/${slug}`,
+            siteName: 'TrendWatch360',
+            type: 'website',
+            images: [
+                {
+                    url: '/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: category.name,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: title,
+            description: description,
+        },
+        alternates: {
+            canonical: `https://trend-watch360.vercel.app/category/${slug}`,
+        },
+    };
+}
 
 export async function generateStaticParams() {
     await dbConnect();

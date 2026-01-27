@@ -8,7 +8,59 @@ import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
 import Category from "@/models/Category";
 
+import type { Metadata, ResolvingMetadata } from 'next';
+
 export const revalidate = 60; // Revalidate every 60 seconds
+
+export async function generateMetadata(
+    { params }: { params: Promise<{ slug: string }> },
+    parent: ResolvingMetadata
+): Promise<Metadata> {
+    const { slug } = await params;
+    const post = await getPostData(slug);
+
+    if (!post) {
+        return {
+            title: 'Post Not Found',
+        };
+    }
+
+    const previousImages = (await parent).openGraph?.images || [];
+
+    return {
+        title: post.title,
+        description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+        keywords: [post.category?.name, ...(post.tags || []), 'TrendWatch360', 'news'],
+        openGraph: {
+            title: post.title,
+            description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+            url: `https://trend-watch360.vercel.app/article/${slug}`,
+            siteName: 'TrendWatch360',
+            type: 'article',
+            publishedTime: post.createdAt,
+            modifiedTime: post.updatedAt || post.createdAt,
+            authors: [post.author || 'TrendWatch360 Team'],
+            images: [
+                {
+                    url: post.featuredImage || '/og-image.jpg',
+                    width: 1200,
+                    height: 630,
+                    alt: post.title,
+                },
+                ...previousImages,
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.title,
+            description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
+            images: [post.featuredImage || '/og-image.jpg'],
+        },
+        alternates: {
+            canonical: `https://trend-watch360.vercel.app/article/${slug}`,
+        },
+    };
+}
 
 async function getPostData(slug: string) {
     await dbConnect();
@@ -73,7 +125,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         "author": [{
             "@type": "Person",
             "name": post.author || "Admin",
-            "url": "https://trendwatch360.com"
+            "url": "https://trend-watch360.vercel.app"
         }]
     };
 
