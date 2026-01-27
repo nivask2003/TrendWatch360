@@ -45,6 +45,20 @@ async function getRecentPostsData() {
     }
 }
 
+export const revalidate = 60;
+
+export async function generateStaticParams() {
+    await dbConnect();
+    try {
+        const categories = await Category.find().select('slug').lean();
+        return categories.map((cat: any) => ({
+            slug: cat.slug,
+        }));
+    } catch (error) {
+        return [];
+    }
+}
+
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const category = await getCategoryData(slug);
@@ -59,8 +73,10 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         );
     }
 
-    const posts = await getPostsByCategoryData(category._id);
-    const recentPosts = await getRecentPostsData();
+    const [posts, recentPosts] = await Promise.all([
+        getPostsByCategoryData(category._id),
+        getRecentPostsData()
+    ]);
 
     return (
         <div className="max-w-news py-6 md:py-10">

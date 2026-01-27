@@ -8,6 +8,8 @@ import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
 import Category from "@/models/Category";
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 async function getPostData(slug: string) {
     await dbConnect();
     try {
@@ -30,10 +32,26 @@ async function getRecentPostsData() {
     }
 }
 
+export async function generateStaticParams() {
+    await dbConnect();
+    try {
+        const posts = await Post.find({ status: 'published' }).select('slug').limit(20).lean();
+        return posts.map((post: any) => ({
+            slug: post.slug,
+        }));
+    } catch (error) {
+        return [];
+    }
+}
+
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = await getPostData(slug);
-    const recentPosts = await getRecentPostsData();
+
+    // Fetch data in parallel for better performance
+    const [post, recentPosts] = await Promise.all([
+        getPostData(slug),
+        getRecentPostsData()
+    ]);
 
     if (!post) {
         return (
