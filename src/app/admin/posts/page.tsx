@@ -8,7 +8,8 @@ import {
     Edit2,
     Trash2,
     ExternalLink,
-    Loader2
+    Loader2,
+    Eye
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
@@ -25,6 +26,7 @@ interface Post {
     createdAt: string;
     author: string;
     featuredImage?: string;
+    views?: number;
 }
 
 export default function AdminPosts() {
@@ -63,7 +65,7 @@ export default function AdminPosts() {
 
     const filteredPosts = posts.filter(post =>
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.category?.name.toLowerCase().includes(searchQuery.toLowerCase())
+        post.category?.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
@@ -108,6 +110,7 @@ export default function AdminPosts() {
                                 <tr>
                                     <th className="px-6 py-4">Article Title</th>
                                     <th className="px-6 py-4">Category</th>
+                                    <th className="px-6 py-4">Views</th>
                                     <th className="px-6 py-4">Status</th>
                                     <th className="px-6 py-4">Date</th>
                                     <th className="px-6 py-4 text-right">Actions</th>
@@ -132,6 +135,12 @@ export default function AdminPosts() {
                                             </span>
                                         </td>
                                         <td className="px-6 py-4">
+                                            <div className="flex items-center gap-1.5 text-xs font-bold text-secondary">
+                                                <Eye size={12} className="text-muted" />
+                                                {(post.views || 0).toLocaleString()}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
                                             <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${post.status === 'published' ? 'bg-green-100 text-green-600' : 'bg-yellow-100 text-yellow-600'
                                                 }`}>
                                                 {post.status}
@@ -151,7 +160,7 @@ export default function AdminPosts() {
                                                 >
                                                     <Trash2 size={16} />
                                                 </button>
-                                                <Link href={`/news/${post.slug}`} target="_blank" className="p-2 text-muted hover:text-secondary transition-colors" title="View Publicly">
+                                                <Link href={`/article/${post.slug}`} target="_blank" className="p-2 text-muted hover:text-secondary transition-colors" title="View Publicly">
                                                     <ExternalLink size={16} />
                                                 </Link>
                                             </div>
@@ -160,7 +169,7 @@ export default function AdminPosts() {
                                 ))}
                                 {filteredPosts.length === 0 && (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-muted font-bold">
+                                        <td colSpan={6} className="px-6 py-12 text-center text-muted font-bold">
                                             No posts found.
                                         </td>
                                     </tr>

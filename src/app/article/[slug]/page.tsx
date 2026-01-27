@@ -2,8 +2,9 @@ import Sidebar from "@/components/public/Sidebar";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
-import { Clock } from "lucide-react";
+import { Clock, Eye } from "lucide-react";
 import ShareButtons from "@/components/public/ShareButtons";
+import ViewTracker from "@/components/public/ViewTracker";
 import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
 import Category from "@/models/Category";
@@ -164,6 +165,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
+            <ViewTracker slug={post.slug} />
             {/* Breadcrumbs - Hidden on very small screens for better space */}
             <nav className="hidden sm:flex items-center gap-2 text-[10px] md:text-xs font-bold text-muted mb-6 uppercase tracking-widest border-b border-border/50 pb-4">
                 <Link href="/" className="hover:text-primary transition-colors">Home</Link>
@@ -198,6 +200,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                                 <div className="flex items-center gap-2 text-muted">
                                     <Clock size={16} />
                                     <span className="text-xs font-bold tracking-tight">{format(new Date(post.createdAt), 'MMM dd, yyyy')}</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-muted">
+                                    <Eye size={16} />
+                                    <span className="text-xs font-bold tracking-tight">{post.views || 0} views</span>
                                 </div>
                                 <ShareButtons title={post.title} />
                             </div>

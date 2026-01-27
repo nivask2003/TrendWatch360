@@ -7,23 +7,27 @@ export async function GET() {
     try {
         await dbConnect();
 
-        const [totalPosts, publishedPosts, draftPosts, totalCategories] = await Promise.all([
+        const [totalPosts, publishedPosts, draftPosts, totalCategories, viewStats] = await Promise.all([
             Post.countDocuments(),
             Post.countDocuments({ status: 'published' }),
             Post.countDocuments({ status: 'draft' }),
             Category.countDocuments(),
+            Post.aggregate([
+                { $group: { _id: null, totalViews: { $sum: "$views" } } }
+            ])
         ]);
 
-        // For "Total Views", we don't have a views field in the schema yet, 
-        // but we can mock it or return 0 for now until we add tracking.
+        const totalViews = viewStats.length > 0 ? viewStats[0].totalViews : 0;
+
         return NextResponse.json({
             totalPosts,
             publishedPosts,
             draftPosts,
             totalCategories,
-            totalViews: 0 // Placeholder for future enhancement
+            totalViews
         });
     } catch (error) {
+        console.error("Stats API Error:", error);
         return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
     }
 }
