@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
         // Email content
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: `"NexGen Report" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_TO || process.env.EMAIL_USER, // Default to sending to self if EMAIL_TO not set
             subject: `New Comment on "${postTitle}"`,
             html: `
