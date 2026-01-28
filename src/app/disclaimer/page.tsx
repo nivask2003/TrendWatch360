@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Disclaimer',
-    description: 'Disclaimer for TrendWatch360 content and services.',
+    description: 'Disclaimer for NexGen Report content and services.',
     alternates: {
-        canonical: 'https://trend-watch360.vercel.app/disclaimer',
+        canonical: 'https://www.nexgenreport.com/disclaimer',
     },
 };
 
@@ -13,7 +13,7 @@ export default function Disclaimer() {
         <div className="max-w-4xl mx-auto py-20 px-4 prose prose-slate">
             <h1 className="text-4xl font-black mb-8">Disclaimer</h1>
             <p>Last updated: January 26, 2026</p>
-            <p>The information provided by TrendWatch360 ("we," "us," or "our") on trendwatch360.com (the "Site") is for general informational purposes only.</p>
+            <p>The information provided by NexGen Report ("we," "us," or "our") on nexgenreport.com (the "Site") is for general informational purposes only.</p>
 
             <h2>No Warranties</h2>
             <p>All information on the Site is provided in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.</p>

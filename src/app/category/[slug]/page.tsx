@@ -62,7 +62,7 @@ export async function generateMetadata(
     }
 
     const title = `${category.name} News & Updates`;
-    const description = category.description || `Read the latest articles and stories about ${category.name} on TrendWatch360.`;
+    const description = category.description || `Read the latest articles and stories about ${category.name} on NexGen Report.`;
 
     return {
         title: title,
@@ -70,8 +70,8 @@ export async function generateMetadata(
         openGraph: {
             title: title,
             description: description,
-            url: `https://trend-watch360.vercel.app/category/${slug}`,
-            siteName: 'TrendWatch360',
+            url: `https://www.nexgenreport.com/category/${slug}`,
+            siteName: 'NexGen Report',
             type: 'website',
             images: [
                 {
@@ -88,7 +88,7 @@ export async function generateMetadata(
             description: description,
         },
         alternates: {
-            canonical: `https://trend-watch360.vercel.app/category/${slug}`,
+            canonical: `https://www.nexgenreport.com/category/${slug}`,
         },
     };
 }

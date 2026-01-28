@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: 'TrendWatch360',
-        short_name: 'TrendWatch',
+        name: 'NexGen Report',
+        short_name: 'NexGen',
         description: 'Stay updated with the latest news on technology, business, lifestyle, and more.',
         start_url: '/',
         display: 'standalone',

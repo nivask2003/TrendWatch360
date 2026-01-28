@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
 
         const result = await new Promise((resolve, reject) => {
             cloudinary.uploader.upload_stream(
-                { folder: 'trendwatch360' },
+                { folder: 'nexgenreport' },
                 (error, result) => {
                     if (error) reject(error);
                     else resolve(result);

@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Search Results',
-    description: 'Search for the latest news, articles, and trending stories on TrendWatch360.',
+    description: 'Search for the latest news, articles, and trending stories on NexGen Report.',
     robots: {
         index: false,
         follow: true,

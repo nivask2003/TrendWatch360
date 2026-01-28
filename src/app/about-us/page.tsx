@@ -2,24 +2,24 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'About Us',
-    description: 'Learn more about TrendWatch360, our mission, and our commitment to high-quality journalism.',
+    description: 'Learn more about NexGen Report, our mission, and our commitment to high-quality journalism.',
     alternates: {
-        canonical: 'https://trend-watch360.vercel.app/about-us',
+        canonical: 'https://www.nexgenreport.com/about-us',
     },
 };
 
 export default function AboutUs() {
     return (
         <div className="max-w-4xl mx-auto py-20 px-4">
-            <h1 className="text-5xl font-black mb-8 text-secondary text-center">About TrendWatch360</h1>
+            <h1 className="text-5xl font-black mb-8 text-secondary text-center">About NexGen Report</h1>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-6">
                 <p>
-                    Welcome to <strong>TrendWatch360</strong>, your premier destination for high-quality journalism, trending stories, and in-depth analysis. We are committed to delivering accurate, timely, and engaging news content that matters to you.
+                    Welcome to <strong>NexGen Report</strong>, your premier destination for high-quality journalism, trending stories, and in-depth analysis. We are committed to delivering accurate, timely, and engaging news content that matters to you.
                 </p>
 
                 <h2>Our Mission</h2>
                 <p>
-                    At TrendWatch360, our mission is to empower our readers with knowledge. In a world of information overload, we strive to cut through the noise and provide clear, concise, and reliable news across various sectors including technology, business, politics, and lifestyle.
+                    At NexGen Report, our mission is to empower our readers with knowledge. In a world of information overload, we strive to cut through the noise and provide clear, concise, and reliable news across various sectors including technology, business, politics, and lifestyle.
                 </p>
 
                 <h2>What We Cover</h2>

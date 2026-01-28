@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
                         <p style="margin-top: 5px; white-space: pre-wrap;">${message}</p>
                     </div>
                     <hr style="border: 1px solid #eee; margin: 20px 0;" />
-                    <p style="font-size: 12px; color: #888;">This email was sent from your TrendWatch360 website.</p>
+                    <p style="font-size: 12px; color: #888;">This email was sent from your NexGen Report website.</p>
                 </div>
             `,
         };

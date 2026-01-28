@@ -59,12 +59,12 @@ export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "TrendWatch360",
-    "url": "https://trend-watch360.vercel.app",
-    "description": "Stay updated with the latest news on technology, business, lifestyle, and more at TrendWatch360.",
+    "name": "NexGen Report",
+    "url": "https://www.nexgenreport.com",
+    "description": "Stay updated with the latest news on technology, business, lifestyle, and more at NexGen Report.",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://trend-watch360.vercel.app/search?q={search_term_string}",
+      "target": "https://www.nexgenreport.com/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };
@@ -75,7 +75,7 @@ export default async function Home() {
     "itemListElement": posts.map((post: any, index: number) => ({
       "@type": "ListItem",
       "position": index + 1,
-      "url": `https://trend-watch360.vercel.app/article/${post.slug}`,
+      "url": `https://www.nexgenreport.com/article/${post.slug}`,
       "name": post.title
     }))
   };

@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin/', '/api/'],
             },
         ],
-        sitemap: 'https://trend-watch360.vercel.app/sitemap.xml',
+        sitemap: 'https://www.nexgenreport.com/sitemap.xml',
     };
 }

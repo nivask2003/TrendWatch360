@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="max-w-news grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div className="space-y-4">
                     <Link href="/" className="text-2xl font-black tracking-tighter text-primary">
-                        TRENDWATCH <span className="text-white tracking-normal">360</span>
+                        NEXGEN <span className="text-white tracking-normal">REPORT</span>
                     </Link>
                     <p className="text-gray-400 text-sm leading-relaxed">
                         Your trusted source for the latest news, trending topics, and in-depth analysis across technology, business, and lifestyle.
@@ -42,7 +42,7 @@ const Footer = () => {
             </div>
 
             <div className="max-w-news border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
-                <p>&copy; {new Date().getFullYear()} TrendWatch360. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} NexGen Report. All rights reserved.</p>
                 <div className="mt-4 flex justify-center gap-6">
                     <p>AdSense Ready Layout</p>
                 </div>

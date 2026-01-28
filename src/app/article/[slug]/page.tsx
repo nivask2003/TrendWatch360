@@ -32,16 +32,16 @@ export async function generateMetadata(
     return {
         title: post.title,
         description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-        keywords: [post.category?.name, ...(post.tags || []), 'TrendWatch360', 'news'],
+        keywords: [post.category?.name, ...(post.tags || []), 'NexGen Report', 'news'],
         openGraph: {
             title: post.title,
             description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-            url: `https://trend-watch360.vercel.app/article/${slug}`,
-            siteName: 'TrendWatch360',
+            url: `https://www.nexgenreport.com/article/${slug}`,
+            siteName: 'NexGen Report',
             type: 'article',
             publishedTime: post.createdAt,
             modifiedTime: post.updatedAt || post.createdAt,
-            authors: [post.author || 'TrendWatch360 Team'],
+            authors: [post.author || 'NexGen Report Team'],
             images: [
                 {
                     url: post.featuredImage || '/og-image.png',
@@ -59,7 +59,7 @@ export async function generateMetadata(
             images: [post.featuredImage || '/og-image.png'],
         },
         alternates: {
-            canonical: `https://trend-watch360.vercel.app/article/${slug}`,
+            canonical: `https://www.nexgenreport.com/article/${slug}`,
         },
     };
 }
@@ -127,7 +127,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         "author": [{
             "@type": "Person",
             "name": post.author || "Admin",
-            "url": "https://trend-watch360.vercel.app"
+            "url": "https://www.nexgenreport.com"
         }]
     };
 
@@ -139,19 +139,19 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://trend-watch360.vercel.app"
+                "item": "https://www.nexgenreport.com"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": post.category?.name || "News",
-                "item": `https://trend-watch360.vercel.app/category/${post.category?.slug}`
+                "item": `https://www.nexgenreport.com/category/${post.category?.slug}`
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": post.title,
-                "item": `https://trend-watch360.vercel.app/article/${post.slug}`
+                "item": `https://www.nexgenreport.com/article/${post.slug}`
             }
         ]
     };
@@ -192,7 +192,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                                     {post.author ? post.author[0] : 'T'}
                                 </div>
                                 <div>
-                                    <p className="text-sm font-black text-secondary">{post.author || 'TrendWatch360'}</p>
+                                    <p className="text-sm font-black text-secondary">{post.author || 'NexGen Report'}</p>
                                     <p className="text-[10px] text-muted font-bold uppercase tracking-tighter">Lead Journalist</p>
                                 </div>
                             </div>
