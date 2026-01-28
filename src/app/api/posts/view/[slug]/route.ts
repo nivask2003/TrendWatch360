@@ -4,11 +4,11 @@ import Post from '@/models/Post';
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { slug: string } }
+    { params }: { params: Promise<{ slug: string }> }
 ) {
     try {
         await dbConnect();
-        const { slug } = params;
+        const { slug } = await params;
 
         const post = await Post.findOneAndUpdate(
             { slug, status: 'published' },
