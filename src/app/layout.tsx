@@ -21,17 +21,17 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL("https://www.nexgenreport.com"),
+  metadataBase: new URL("https://nex-gen-report.vercel.app"),
   alternates: {
     canonical: '/',
     types: {
-      'application/rss+xml': 'https://www.nexgenreport.com/rss.xml',
+      'application/rss+xml': 'https://nex-gen-report.vercel.app/rss.xml',
     },
   },
   openGraph: {
     title: "NexGen Report - Latest Trending News & Updates",
     description: "Stay updated with the latest news on technology, business, lifestyle, and more at NexGen Report.",
-    url: 'https://www.nexgenreport.com',
+    url: 'https://nex-gen-report.vercel.app',
     siteName: 'NexGen Report',
     locale: 'en_US',
     type: 'website',
@@ -77,8 +77,8 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "NexGen Report",
-    "url": "https://www.nexgenreport.com",
-    "logo": "https://www.nexgenreport.com/og-image.png",
+    "url": "https://nex-gen-report.vercel.app",
+    "logo": "https://nex-gen-report.vercel.app/og-image.png",
     "sameAs": [
       "https://twitter.com/nexgenreport",
       "https://facebook.com/nexgenreport"
@@ -89,10 +89,10 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "NexGen Report",
-    "url": "https://www.nexgenreport.com",
+    "url": "https://nex-gen-report.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://www.nexgenreport.com/search?q={search_term_string}",
+      "target": "https://nex-gen-report.vercel.app/search?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   };

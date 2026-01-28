@@ -5,7 +5,7 @@ export const metadata: Metadata = {
     title: 'Contact Us',
     description: 'Get in touch with NexGen Report. Send us your news tips, feedback, or business inquiries.',
     alternates: {
-        canonical: 'https://www.nexgenreport.com/contact-us',
+        canonical: 'https://nex-gen-report.vercel.app/contact-us',
     },
 };
 
@@ -15,7 +15,7 @@ export default function ContactUs() {
         "@type": "ContactPage",
         "name": "Contact NexGen Report",
         "description": "Get in touch with NexGen Report. Send us your news tips, feedback, or business inquiries.",
-        "url": "https://www.nexgenreport.com/contact-us",
+        "url": "https://nex-gen-report.vercel.app/contact-us",
         "contactPoint": {
             "@type": "ContactPoint",
             "telephone": "+1-555-000-0000",

@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: 'About Us',
     description: 'Learn more about NexGen Report, our mission, and our commitment to high-quality journalism.',
     alternates: {
-        canonical: 'https://www.nexgenreport.com/about-us',
+        canonical: 'https://nex-gen-report.vercel.app/about-us',
     },
 };
 
@@ -14,13 +14,13 @@ export default function AboutUs() {
         "@type": "AboutPage",
         "name": "About NexGen Report",
         "description": "Learn more about NexGen Report, our mission, and our commitment to high-quality journalism.",
-        "url": "https://www.nexgenreport.com/about-us",
+        "url": "https://nex-gen-report.vercel.app/about-us",
         "publisher": {
             "@type": "Organization",
             "name": "NexGen Report",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.nexgenreport.com/og-image.png"
+                "url": "https://nex-gen-report.vercel.app/og-image.png"
             }
         }
     };

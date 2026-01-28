@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: 'Disclaimer',
     description: 'Disclaimer for NexGen Report content and services.',
     alternates: {
-        canonical: 'https://www.nexgenreport.com/disclaimer',
+        canonical: 'https://nex-gen-report.vercel.app/disclaimer',
     },
 };
 

@@ -70,7 +70,7 @@ export async function generateMetadata(
         openGraph: {
             title: title,
             description: description,
-            url: `https://www.nexgenreport.com/category/${slug}`,
+            url: `https://nex-gen-report.vercel.app/category/${slug}`,
             siteName: 'NexGen Report',
             type: 'website',
             images: [
@@ -88,7 +88,7 @@ export async function generateMetadata(
             description: description,
         },
         alternates: {
-            canonical: `https://www.nexgenreport.com/category/${slug}`,
+            canonical: `https://nex-gen-report.vercel.app/category/${slug}`,
         },
     };
 }

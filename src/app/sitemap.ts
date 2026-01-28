@@ -5,7 +5,7 @@ import Category from '@/models/Category';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     await dbConnect();
-    const baseUrl = 'https://www.nexgenreport.com';
+    const baseUrl = 'https://nex-gen-report.vercel.app';
 
     // Fetch all published posts
     const posts = await Post.find({ status: 'published' }).select('slug updatedAt').lean();

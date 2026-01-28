@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
     await dbConnect();
-    const baseUrl = 'https://www.nexgenreport.com';
+    const baseUrl = 'https://nex-gen-report.vercel.app';
 
     // Fetch latest 20 posts
     const posts = await Post.find({ status: 'published' })

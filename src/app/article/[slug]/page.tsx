@@ -36,7 +36,7 @@ export async function generateMetadata(
         openGraph: {
             title: post.title,
             description: post.summary || post.content.substring(0, 160).replace(/<[^>]*>/g, ''),
-            url: `https://www.nexgenreport.com/article/${slug}`,
+            url: `https://nex-gen-report.vercel.app/article/${slug}`,
             siteName: 'NexGen Report',
             type: 'article',
             publishedTime: post.createdAt,
@@ -59,7 +59,7 @@ export async function generateMetadata(
             images: [post.featuredImage || '/og-image.png'],
         },
         alternates: {
-            canonical: `https://www.nexgenreport.com/article/${slug}`,
+            canonical: `https://nex-gen-report.vercel.app/article/${slug}`,
         },
     };
 }
@@ -127,14 +127,14 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         "author": [{
             "@type": "Person",
             "name": post.author || "Admin",
-            "url": "https://www.nexgenreport.com"
+            "url": "https://nex-gen-report.vercel.app"
         }],
         "publisher": {
             "@type": "Organization",
             "name": "NexGen Report",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.nexgenreport.com/og-image.png"
+                "url": "https://nex-gen-report.vercel.app/og-image.png"
             }
         }
     };
@@ -147,19 +147,19 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://www.nexgenreport.com"
+                "item": "https://nex-gen-report.vercel.app"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
                 "name": post.category?.name || "News",
-                "item": `https://www.nexgenreport.com/category/${post.category?.slug}`
+                "item": `https://nex-gen-report.vercel.app/category/${post.category?.slug}`
             },
             {
                 "@type": "ListItem",
                 "position": 3,
                 "name": post.title,
-                "item": `https://www.nexgenreport.com/article/${post.slug}`
+                "item": `https://nex-gen-report.vercel.app/article/${post.slug}`
             }
         ]
     };

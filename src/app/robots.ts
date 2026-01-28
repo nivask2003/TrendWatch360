@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/admin/', '/api/'],
             },
         ],
-        sitemap: 'https://www.nexgenreport.com/sitemap.xml',
+        sitemap: 'https://nex-gen-report.vercel.app/sitemap.xml',
     };
 }

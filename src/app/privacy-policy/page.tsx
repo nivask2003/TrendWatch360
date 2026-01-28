@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: 'Privacy Policy',
     description: 'Privacy Policy for NexGen Report. Learn how we collect, use, and protect your information.',
     alternates: {
-        canonical: 'https://www.nexgenreport.com/privacy-policy',
+        canonical: 'https://nex-gen-report.vercel.app/privacy-policy',
     },
 };
 

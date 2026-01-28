@@ -4,7 +4,7 @@ export const metadata: Metadata = {
     title: 'Terms and Conditions',
     description: 'Terms and Conditions for using NexGen Report services.',
     alternates: {
-        canonical: 'https://www.nexgenreport.com/terms-and-conditions',
+        canonical: 'https://nex-gen-report.vercel.app/terms-and-conditions',
     },
 };
 
