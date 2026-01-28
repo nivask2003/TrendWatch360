@@ -14,7 +14,7 @@ export default function AdminLogin() {
         e.preventDefault();
         // For now, allow access with dummy check or just redirect
         // Real implementation would call /api/auth/login
-        if (email === 'admin@trendwatch360.com' && password === 'admin123') {
+        if (email === 'admin@nexgenreport.com' && password === 'admin123') {
             router.push('/admin');
         } else {
             setError('Invalid email or password');
@@ -26,7 +26,7 @@ export default function AdminLogin() {
             <div className="bg-white p-10 rounded-3xl border border-border shadow-xl w-full max-w-md">
                 <div className="text-center mb-10">
                     <Link href="/" className="text-3xl font-black tracking-tighter text-primary inline-block mb-4">
-                        TRENDWATCH <span className="text-secondary tracking-normal">360</span>
+                        NEXGEN <span className="text-secondary tracking-normal">REPORT</span>
                     </Link>
                     <h1 className="text-xl font-bold text-secondary">Admin Dashboard Access</h1>
                     <p className="text-muted text-sm mt-2">Please enter your credentials to manage the news portal.</p>

@@ -77,7 +77,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       `}>
                 <div className="h-16 flex items-center justify-between px-6 border-b border-gray-800 shrink-0">
                     <Link href="/admin" className="text-primary font-black text-xl truncate">
-                        {(isSidebarOpen || isMobileMenuOpen) ? 'TRENDWATCH ADMIN' : 'TW'}
+                        {(isSidebarOpen || isMobileMenuOpen) ? 'NEXGEN ADMIN' : 'NG'}
                     </Link>
                     <button className="lg:hidden" onClick={() => setIsMobileMenuOpen(false)}>
                         <X size={20} />

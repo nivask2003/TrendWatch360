@@ -23,7 +23,7 @@ export default function AdminSettings() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">Site Name</label>
-                            <input type="text" className="w-full bg-gray-50 border border-border rounded-xl py-3 px-4 text-sm font-bold" defaultValue="TrendWatch360" />
+                            <input type="text" className="w-full bg-gray-50 border border-border rounded-xl py-3 px-4 text-sm font-bold" defaultValue="NexGen Report" />
                         </div>
                         <div>
                             <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">Primary Color</label>
@@ -34,7 +34,7 @@ export default function AdminSettings() {
                         </div>
                         <div className="md:col-span-2">
                             <label className="block text-xs font-bold text-muted uppercase tracking-wider mb-2">Global Meta Description</label>
-                            <textarea rows={3} className="w-full bg-gray-50 border border-border rounded-xl py-3 px-4 text-sm" defaultValue="Stay updated with the latest news on technology, business, lifestyle, and more at TrendWatch360." />
+                            <textarea rows={3} className="w-full bg-gray-50 border border-border rounded-xl py-3 px-4 text-sm" defaultValue="Stay updated with the latest news on technology, business, lifestyle, and more at NexGen Report." />
                         </div>
                     </div>
                 </section>
