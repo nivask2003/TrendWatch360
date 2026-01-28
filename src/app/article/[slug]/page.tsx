@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Clock, Eye } from "lucide-react";
 import ShareButtons from "@/components/public/ShareButtons";
 import ViewTracker from "@/components/public/ViewTracker";
+import CommentForm from "@/components/public/CommentForm";
 import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
 import Category from "@/models/Category";
@@ -234,6 +235,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                             ))}
                         </div>
                     )}
+
+                    <CommentForm postTitle={post.title} postSlug={post.slug} />
                 </article>
 
                 <aside className="lg:col-span-4 mt-8 lg:mt-0">
