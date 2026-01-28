@@ -24,6 +24,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.nexgenreport.com"),
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': 'https://www.nexgenreport.com/rss.xml',
+    },
   },
   openGraph: {
     title: "NexGen Report - Latest Trending News & Updates",
