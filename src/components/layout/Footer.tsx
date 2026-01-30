@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { Facebook, Twitter, Instagram, Youtube, Mail } from 'lucide-react';
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 
 interface Category {
     _id: string;
@@ -55,6 +55,21 @@ const Footer = () => {
                                     <social.Icon size={18} />
                                 </Link>
                             ))}
+                        </div>
+
+                        <div className="pt-4 space-y-3">
+                            <div className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors">
+                                <Mail size={16} className="text-primary" />
+                                <span>nexgenreport26@gmail.com</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors">
+                                <Phone size={16} className="text-primary" />
+                                <span>+91 9244544591</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-sm text-gray-400 hover:text-white transition-colors">
+                                <MapPin size={16} className="text-primary" />
+                                <span>India</span>
+                            </div>
                         </div>
                     </div>
 

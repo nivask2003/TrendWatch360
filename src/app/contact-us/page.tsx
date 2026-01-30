@@ -18,10 +18,10 @@ export default function ContactUs() {
         "url": "https://nex-gen-report.vercel.app/contact-us",
         "contactPoint": {
             "@type": "ContactPoint",
-            "telephone": "+1-555-000-0000",
+            "telephone": "+91-9244544591",
             "contactType": "customer service",
-            "email": "contact@nexgenreport.com",
-            "areaServed": "US",
+            "email": "nexgenreport26@gmail.com",
+            "areaServed": "IN",
             "availableLanguage": "en"
         }
     };
@@ -48,7 +48,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <p className="text-xs font-bold text-muted uppercase tracking-widest">Email Us</p>
-                                <p className="text-xl font-bold text-secondary">contact@nexgenreport.com</p>
+                                <p className="text-xl font-bold text-secondary">nexgenreport26@gmail.com</p>
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <p className="text-xs font-bold text-muted uppercase tracking-widest">Call Us</p>
-                                <p className="text-xl font-bold text-secondary">+1 (555) 000-0000</p>
+                                <p className="text-xl font-bold text-secondary">+91 9244544591</p>
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@ export default function ContactUs() {
                             </div>
                             <div>
                                 <p className="text-xs font-bold text-muted uppercase tracking-widest">Office</p>
-                                <p className="text-xl font-bold text-secondary">New York, NY 10001, USA</p>
+                                <p className="text-xl font-bold text-secondary">India</p>
                             </div>
                         </div>
                     </div>
