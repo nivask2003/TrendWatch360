@@ -76,13 +76,31 @@ async function getPostData(slug: string) {
     }
 }
 
-async function getRecentPostsData() {
+async function getRecentPostsData(currentPostSlug: string) {
     await dbConnect();
     try {
-        const posts = await Post.find({ status: 'published' }).sort({ createdAt: -1 }).limit(5).lean();
+        const posts = await Post.find({
+            status: 'published',
+            slug: { $ne: currentPostSlug }
+        }).sort({ createdAt: -1 }).limit(5).lean();
         return JSON.parse(JSON.stringify(posts));
     } catch (error) {
         console.error("Error fetching recent posts:", error);
+        return [];
+    }
+}
+
+async function getRelatedPostsData(categoryId: string, currentPostId: string) {
+    await dbConnect();
+    try {
+        const posts = await Post.find({
+            category: categoryId,
+            status: 'published',
+            _id: { $ne: currentPostId }
+        }).populate({ path: 'category', model: Category }).limit(3).lean();
+        return JSON.parse(JSON.stringify(posts));
+    } catch (error) {
+        console.error("Error fetching related posts:", error);
         return [];
     }
 }
@@ -103,10 +121,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     const { slug } = await params;
 
     // Fetch data in parallel for better performance
-    const [post, recentPosts] = await Promise.all([
-        getPostData(slug),
-        getRecentPostsData()
-    ]);
+    const post = await getPostData(slug);
 
     if (!post) {
         return (
@@ -117,6 +132,11 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
             </div>
         );
     }
+
+    const [recentPosts, relatedPosts] = await Promise.all([
+        getRecentPostsData(slug),
+        getRelatedPostsData(post.category?._id, post._id)
+    ]);
 
     const jsonLd = {
         "@context": "https://schema.org",
@@ -250,6 +270,40 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                     )}
 
                     <CommentForm postTitle={post.title} postSlug={post.slug} />
+
+                    {/* Related Posts Section */}
+                    {relatedPosts.length > 0 && (
+                        <div className="mt-16 pt-16 border-t border-border">
+                            <div className="flex items-center gap-3 mb-10">
+                                <div className="w-2 h-8 bg-primary rounded-full" />
+                                <h2 className="text-3xl font-black uppercase">Related Stories</h2>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {relatedPosts.map((related: any) => (
+                                    <div key={related._id} className="group flex flex-col gap-4">
+                                        <div className="relative aspect-video overflow-hidden rounded-xl bg-gray-100 border border-border">
+                                            <Image
+                                                src={related.featuredImage || 'https://images.unsplash.com/photo-1504711432869-5d39a130f6c8?auto=format&fit=crop&q=80&w=600'}
+                                                alt={related.title}
+                                                fill
+                                                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Link href={`/category/${related.category?.slug}`} className="text-[10px] font-black text-primary uppercase tracking-widest">
+                                                {related.category?.name}
+                                            </Link>
+                                            <Link href={`/article/${related.slug}`}>
+                                                <h3 className="text-sm font-black leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                                    {related.title}
+                                                </h3>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </article>
 
                 <aside className="lg:col-span-4 mt-8 lg:mt-0">
