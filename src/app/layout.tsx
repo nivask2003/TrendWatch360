@@ -16,12 +16,14 @@ export const metadata: Metadata = {
   description: "Stay updated with the latest news on technology, business, lifestyle, and more at NexGen Report. Fast, reliable, and professional news reporting.",
   keywords: ["news", "latest news", "trending topics", "technology", "business", "NexGen Report", "world news", "lifestyle news"],
   authors: [{ name: "NexGen Report Team" }],
-  creator: "NexGen Report",
-  publisher: "NexGen Report",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
+  },
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
   },
   metadataBase: new URL("https://nex-gen-report.vercel.app"),
   alternates: {
